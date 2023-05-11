@@ -1,0 +1,5 @@
+{
+  "text.autoconfig.segmented.title" : "Segmented Options",
+  "text.autoconfig.segmented.option.enabled" : "Enabled",
+  "text.autoconfig.segmented.option.enabled.@Tooltip" : "Enables or disables the segmented hotbar"
+}
