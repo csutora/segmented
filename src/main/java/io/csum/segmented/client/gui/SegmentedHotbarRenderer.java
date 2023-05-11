@@ -40,15 +40,14 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
         int scaledHeight = client.getWindow().getScaledHeight();
         Point2D.Float hotbar = new Point2D.Float(scaledWidthHalved + HOTBAR.x, scaledHeight + HOTBAR.y);
 
-
         RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
 
         // draw the hotbar itself
         DrawableHelper.drawTexture(matrices,
                 (int) hotbar.x,
                 (int) hotbar.y,
-                CANVAS_HOTBAR_POS.x,
-                CANVAS_HOTBAR_POS.y,
+                HOTBAR_POS.x,
+                HOTBAR_POS.y,
                 HOTBAR.width,
                 HOTBAR.height,
                 (int) CANVAS_SIZE.x,
@@ -59,8 +58,8 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
             DrawableHelper.drawTexture(matrices,
                     (int) hotbar.x - 1 + (inventory.selectedSlot * SLOT.width) + (HOTBAR_GAP * (inventory.selectedSlot / 3)),
                     (int) hotbar.y - 1,
-                    VANILLA_SELECTOR.x,
-                    VANILLA_SELECTOR.y,
+                    VANILLA_SELECTOR_POS.x,
+                    VANILLA_SELECTOR_POS.y,
                     VANILLA_SELECTOR.width,
                     VANILLA_SELECTOR.height,
                     (int) CANVAS_SIZE.x,
@@ -71,8 +70,8 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
             drawTexture(matrices,
                     (int) hotbar.x - 1 + (SEGMENT_SELECTOR.width * SegmentedMod.selectedHotbarSegment),
                     (int) hotbar.y - 1,
-                    SEGMENT_SELECTOR.x,
-                    SEGMENT_SELECTOR.y,
+                    SEGMENT_SELECTOR_POS.x,
+                    SEGMENT_SELECTOR_POS.y,
                     SEGMENT_SELECTOR.width,
                     SEGMENT_SELECTOR.height,
                     (int) CANVAS_SIZE.x,
@@ -89,8 +88,8 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
             drawTexture(matrices,
                     offHandX,
                     (int) hotbar.y,
-                    OFFHAND_SLOT.x,
-                    OFFHAND_SLOT.y,
+                    OFFHAND_SLOT_POS.x,
+                    OFFHAND_SLOT_POS.y,
                     OFFHAND_SLOT.width,
                     OFFHAND_SLOT.height,
                     (int) CANVAS_SIZE.x,
