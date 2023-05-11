@@ -4,22 +4,26 @@
   "version": "${version}",
 
   "name": "Segmented",
-  "description": "Eases quick slot switching on small keyboards, and looks great while doing it",
+  "description": "Makes hotkeying to any slot easy, and looks great while doing it",
   "authors": [
     "csumpasd"
   ],
   "contact": {
-    "homepage": "https://csum.io/",
-    "sources": "https://github.com/csumpasd/segmented"
+    "homepage": "https://github.com/csumpasd/segmented",
+    "sources": "https://github.com/csumpasd/segmented",
+    "issues": "https://github.com/csumpasd/segmented/issues"
   },
 
-  "license": "MIT",
+  "license": "CC0-1.0",
   "icon": "assets/segmented/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.csum.segmented.HotbarMod"
+      "io.csum.segmented.SegmentedMod"
+    ],
+    "modmenu": [
+      "io.csum.segmented.integration.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -29,10 +33,11 @@
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "~1.19",
-    "java": ">=17"
+    "minecraft": "~1.19.4",
+    "java": ">=17",
+    "cloth-config2": "*"
   },
   "suggests": {
-    "another-mod": "*"
+    "modmenu": "*"
   }
 }
