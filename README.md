@@ -1,4 +1,4 @@
-# Segmented
+# segmented
 
 A mod that splits your hotbar into 3 segments, and removes the need to move your hand multiple miles every time you want to hotkey to later slots. <br>
 The way it works is instead of using keys 1-9 to select a slot, you first select a segment using 1-3, and then select a slot in that segment using 1-3 again. <br>
