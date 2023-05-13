@@ -7,6 +7,7 @@ import net.fabricmc.api.ModInitializer;
 
 public class SegmentedMod implements ModInitializer {
 	public static int selectedHotbarSegment = -1;
+	public static float cancelTimer = 0;
 
 	@Override
 	public void onInitialize() {
