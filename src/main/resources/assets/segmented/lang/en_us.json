@@ -1,5 +1,17 @@
 {
   "text.autoconfig.segmented.title" : "Segmented Options",
   "text.autoconfig.segmented.option.enabled" : "Enabled",
-  "text.autoconfig.segmented.option.enabled.@Tooltip" : "Enables or disables the segmented hotbar"
+  "text.autoconfig.segmented.option.enabled.@Tooltip" : "Enables or disables the segmented hotbar",
+
+  "text.autoconfig.segmented.option.norender" : "Use vanilla hotbar rendering",
+  "text.autoconfig.segmented.option.norender.@Tooltip" : "If true, disables the custom hotbar but keeps the selection mechanics",
+
+  "text.autoconfig.segmented.option.scrollreset" :  "Scrolling clears segment selection",
+  "text.autoconfig.segmented.option.scrollreset.@Tooltip": "Enables or disables the mechanic where scrolling clears the segment selection",
+
+  "text.autoconfig.segmented.option.usereset" : "Using item clears segment selection",
+  "text.autoconfig.segmented.option.usereset.@Tooltip" : "Enables or disables the mechanic where using an item clears the segment selection",
+
+  "text.autoconfig.segmented.option.timerreset" : "Segment selection clear time",
+  "text.autoconfig.segmented.option.timerreset.@Tooltip" : "Sets the time in seconds after which the segment selection gets cleared, 0 disables this feature"
 }

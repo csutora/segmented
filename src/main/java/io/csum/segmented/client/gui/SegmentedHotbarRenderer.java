@@ -30,7 +30,7 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
 
     public boolean renderSegmentedHotbar(MatrixStack matrices) {
 
-        if (isHidden() || !config.enabled) { return false; }
+        if (isHidden() || !config.enabled || config.norender) { return false; }
 
         PlayerEntity player = (PlayerEntity)client.cameraEntity;
         if (player == null) { return false; }

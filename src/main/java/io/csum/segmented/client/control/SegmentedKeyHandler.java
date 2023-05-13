@@ -15,9 +15,11 @@ public class SegmentedKeyHandler {
         if (slot > 2) { return true; }
         if (SegmentedMod.selectedHotbarSegment == -1) {
             SegmentedMod.selectedHotbarSegment = slot;
+            SegmentedMod.cancelTimer = config.timerreset * 20;
         } else {
             inventory.selectedSlot = slot + 3 * SegmentedMod.selectedHotbarSegment;
             SegmentedMod.selectedHotbarSegment = -1;
+            SegmentedMod.cancelTimer = 0;
         }
         return true;
     }

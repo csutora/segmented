@@ -24,8 +24,6 @@ public abstract class MinecraftClientMixin {
     @Shadow @Nullable
     public Screen currentScreen;
 
-
-
     @Redirect(method = "handleInputEvents",
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/client/option/KeyBinding;wasPressed()Z",
