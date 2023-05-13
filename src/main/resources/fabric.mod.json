@@ -14,7 +14,7 @@
     "issues": "https://github.com/csumpasd/segmented/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/segmented/icon.png",
 
   "environment": "*",
