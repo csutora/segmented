@@ -9,4 +9,4 @@ No Forge support is planned, and please don't ask for it. <br>
 
 The mod requires [Cloth Config](https://github.com/shedaniel/ClothConfig/) and [Fabric API](https://github.com/FabricMC/fabric), and you can toggle features of the mod through [ModMenu](https://github.com/TerraformersMC/ModMenu), if needed.
 
-*heavily inspired by [Inventorio](https://github.com/Lizard-Of-Oz/Inventorio)*
+*heavily inspired by [Inventorio](https://curseforge.com/minecraft/mc-mods/inventorio)*
