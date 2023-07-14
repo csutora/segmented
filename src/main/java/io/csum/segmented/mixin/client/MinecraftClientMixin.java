@@ -4,6 +4,7 @@ import io.csum.segmented.client.control.SegmentedKeyHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
@@ -19,10 +20,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Environment(EnvType.CLIENT)
 public abstract class MinecraftClientMixin {
 
-    @Shadow public ClientPlayerEntity player;
-    @Shadow @Final public GameOptions options;
+    @Shadow
+    public ClientPlayerEntity player;
+    @Shadow @Final
+    public GameOptions options;
     @Shadow @Nullable
     public Screen currentScreen;
+    @Shadow @Final
+    public InGameHud inGameHud;
 
     @Redirect(method = "handleInputEvents",
             at = @At(value = "INVOKE",
@@ -31,13 +36,14 @@ public abstract class MinecraftClientMixin {
     private boolean segmentedHandleHotbarSlotSelection(KeyBinding keyBinding) {
 
         if (!keyBinding.wasPressed()) { return false; }
-        if (player.isSpectator()) { return false; }
 
         if (!player.isCreative() || currentScreen != null || (!options.saveToolbarActivatorKey.isPressed() && !options.loadToolbarActivatorKey.isPressed())) {
             SegmentedKeyHandler segmentedKeyHandler = new SegmentedKeyHandler();
             for (int i = 0; i < 9; i++) {
                 if (keyBinding == options.hotbarKeys[i])
-                    return !segmentedKeyHandler.handleSegmentedHotbarSlotSelection(player.getInventory(), i);
+                    if (player.isSpectator()) { this.inGameHud.getSpectatorHud().selectSlot(i); return false; }
+                    else
+                        return !segmentedKeyHandler.handleSegmentedHotbarSlotSelection(player.getInventory(), i);
             }
         }
         return true;
