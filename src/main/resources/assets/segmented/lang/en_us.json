@@ -3,8 +3,8 @@
   "text.autoconfig.segmented.option.enabled" : "Enabled",
   "text.autoconfig.segmented.option.enabled.@Tooltip" : "Enables or disables the segmented hotbar",
 
-  "text.autoconfig.segmented.option.norender" : "Use vanilla hotbar rendering",
-  "text.autoconfig.segmented.option.norender.@Tooltip" : "If true, disables the custom hotbar but keeps the selection mechanics",
+  "text.autoconfig.segmented.option.onlyselector" : "Use vanilla hotbar rendering with segmented selection",
+  "text.autoconfig.segmented.option.onlyselector.@Tooltip" : "If true, disables the segmentation of the hotbar but keeps the selection mechanics and rendering",
 
   "text.autoconfig.segmented.option.scrollreset" :  "Scrolling clears segment selection",
   "text.autoconfig.segmented.option.scrollreset.@Tooltip": "Enables or disables the mechanic where scrolling clears the segment selection",

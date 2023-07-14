@@ -13,8 +13,8 @@ public class SegmentedConfig implements ConfigData {
     public boolean enabled = true;
 
     @ConfigEntry.Gui.Tooltip
-    @Comment("If true, disables the custom hotbar but keeps the selection mechanics")
-    public boolean norender = false;
+    @Comment("If true, disables the segmentation of the hotbar but keeps the selection mechanics and rendering")
+    public boolean onlyselector = false;
 
     @ConfigEntry.Gui.Tooltip
     @Comment("Enables or disables the mechanic where scrolling clears the segment selection")
