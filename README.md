@@ -17,5 +17,5 @@ Segmented is available for Fabric only. No Forge support is planned, and please 
 - [ModMenu](https://github.com/TerraformersMC/ModMenu) - optional, lets you configure the mod at runtime.
 
 ### Mod compat
- - [Auto HUD](https://github.com/Crendgrim/AutoHUD) - reveals the hotbar on segment change, and the default selection cancel timer is just shorter than Auto HUD's hide, so it's really satisfying.
- - [Raised](https://github.com/yurisuika/Raised) - works perfectly through their ObjectShare feature.
+ - [Auto HUD](https://github.com/Crendgrim/AutoHUD) - compatible, reveals the hotbar on segment change as well.
+ - [Raised](https://github.com/yurisuika/Raised) - compatible, works perfectly through their ObjectShare feature.
