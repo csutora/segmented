@@ -42,7 +42,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// ModMenu
-	modApi "com.terraformersmc:modmenu:7.1.0"
+	modApi "com.terraformersmc:modmenu:7.0.1"
 
 	// Cloth Config
 	modApi("me.shedaniel.cloth:cloth-config-fabric:11.1.106") {
