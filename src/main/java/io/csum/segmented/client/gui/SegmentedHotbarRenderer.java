@@ -103,8 +103,8 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
 
             // render offhand item
             ItemStack itemStack = player.getOffHandStack();
-            client.getItemRenderer().renderInGuiWithOverrides(matrices, itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
-            client.getItemRenderer().renderGuiItemOverlay(matrices, client.textRenderer, itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
+            client.getItemRenderer().renderInGuiWithOverrides(itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
+            client.getItemRenderer().renderGuiItemOverlay(client.textRenderer, itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
         }
 
         // render items
@@ -112,8 +112,8 @@ public class SegmentedHotbarRenderer extends DrawableHelper {
             int x = (int) hotbar.x + ITEM_INSET + (currSlot * SLOT_OFFSET) + (HOTBAR_GAP * (currSlot / 3));
             int y = (int) hotbar.y + ITEM_INSET;
             ItemStack itemStack = inventory.getStack(currSlot);
-            client.getItemRenderer().renderInGuiWithOverrides(matrices, itemStack, x, y);
-            client.getItemRenderer().renderGuiItemOverlay(matrices, client.textRenderer, itemStack, x, y);
+            client.getItemRenderer().renderInGuiWithOverrides(itemStack, x, y);
+            client.getItemRenderer().renderGuiItemOverlay(client.textRenderer, itemStack, x, y);
         }
 
 
