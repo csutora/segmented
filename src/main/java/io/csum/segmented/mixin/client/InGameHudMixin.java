@@ -10,9 +10,12 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,17 +29,18 @@ import static io.csum.segmented.client.util.Constants.TEXTURE_SIZE;
 @Environment(EnvType.CLIENT)
 public abstract class InGameHudMixin {
 
-    private final Identifier SEGMENTED_WIDGETS_TEXTURE = new Identifier("segmented", "textures/gui/widgets.png");
+    @Unique
+    private final Identifier SEGMENTED_WIDGETS_TEXTURE = Identifier.of("segmented", "textures/gui/widgets.png");
 
     private final MinecraftClient client = MinecraftClient.getInstance();
     private final SegmentedConfig config = AutoConfig.getConfigHolder(SegmentedConfig.class).getConfig();
 
     // rewrites the hotbar renderer so that it is segmented, and handles cancelling segment selection on a timer
     @Inject(method = "renderHotbar", at = @At(value = "HEAD"), cancellable = true, require = 0)
-    private void renderSegmentedHotbar(float tickDelta, DrawContext context, CallbackInfo ci) {
+    private void renderSegmentedHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (config.timerreset > 0) {
             if (SegmentedMod.cancelTimer > 0) {
-                SegmentedMod.cancelTimer -= tickDelta;
+                SegmentedMod.cancelTimer -= tickCounter.getTickDelta(true);
             } else {
                 SegmentedMod.cancelTimer = 0;
                 SegmentedMod.selectedHotbarSegment = -1;
@@ -51,7 +55,7 @@ public abstract class InGameHudMixin {
 
     // "only selector" mode
     @Inject(method = "renderHotbar", at = @At(value = "TAIL"), require = 0)
-    private void renderSegmentedSelectorOnly(float tickDelta, DrawContext context, CallbackInfo ci) {
+    private void renderSegmentedSelectorOnly(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (config.onlyselector) {
 
             SegmentedHotbarRenderer segmentedHotbarRenderer = new SegmentedHotbarRenderer();
@@ -70,7 +74,8 @@ public abstract class InGameHudMixin {
 
             // draw segment selection box if needed
             if (SegmentedMod.selectedHotbarSegment != -1) {
-                context.drawTexture(SEGMENTED_WIDGETS_TEXTURE,
+                context.drawTexture(identifier -> RenderLayer.getGuiOverlay(),
+                        SEGMENTED_WIDGETS_TEXTURE,
                         (int) hotbar.x + (SegmentedMod.selectedHotbarSegment * (SEGMENT_OFFSET - HOTBAR_GAP)),
                         (int) hotbar.y,
                         (float) SEGMENT_SELECTOR.x + (SegmentedMod.selectedHotbarSegment * (SEGMENT_SELECTOR.width + 1)),

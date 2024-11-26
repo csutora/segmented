@@ -10,10 +10,13 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.AttackIndicator;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import java.awt.geom.Point2D;
 
@@ -21,8 +24,9 @@ import static io.csum.segmented.client.util.Constants.*;
 
 @Environment(EnvType.CLIENT)
 public class SegmentedHotbarRenderer {
-    private final Identifier WIDGETS_TEXTURE = new Identifier("segmented", "textures/gui/widgets.png");
-    private final Identifier VANILLA_ICONS_TEXTURE = new Identifier("minecraft", "textures/gui/icons.png");
+    private final Identifier WIDGETS_TEXTURE = Identifier.of("segmented", "textures/gui/widgets.png");
+    private final Identifier HOTBAR_ATTACK_INDICATOR_BACKGROUND_TEXTURE = Identifier.of("minecraft", "textures/gui/sprites/hud/hotbar_attack_indicator_background.png");
+    private final Identifier HOTBAR_ATTACK_INDICATOR_PROGRESS_TEXTURE = Identifier.of("minecraft", "textures/gui/hotbar_attack_indicator_progress.png");
     private final MinecraftClient client = MinecraftClient.getInstance();
 
     private final SegmentedConfig config = AutoConfig.getConfigHolder(SegmentedConfig.class).getConfig();
@@ -47,7 +51,8 @@ public class SegmentedHotbarRenderer {
                 scaledHeight + HOTBAR_OFFSET_FROM_BOTTOM_CENTER.y - SegmentedMod.raiseAmount);
 
         // draw the hotbar itself
-        context.drawTexture(WIDGETS_TEXTURE,
+        context.drawTexture(RenderLayer::getGuiTexturedOverlay,
+                WIDGETS_TEXTURE,
                 (int) hotbar.x,
                 (int) hotbar.y,
                 (float) HOTBAR_BOUNDING_BOX.x,
@@ -59,7 +64,8 @@ public class SegmentedHotbarRenderer {
 
         if (SegmentedMod.selectedHotbarSegment == -1) {
             // draw slot selection box
-            context.drawTexture(WIDGETS_TEXTURE,
+            context.drawTexture(RenderLayer::getGuiTexturedOverlay,
+                    WIDGETS_TEXTURE,
                     (int) hotbar.x + (inventory.selectedSlot * SLOT_OFFSET) + (HOTBAR_GAP * (inventory.selectedSlot / 3)),
                     (int) hotbar.y,
                     (float) SLOT_SELECTOR.x + (inventory.selectedSlot * (SLOT_SELECTOR.width + 1)),
@@ -71,7 +77,8 @@ public class SegmentedHotbarRenderer {
 
         } else {
             // draw segment selection box
-            context.drawTexture(WIDGETS_TEXTURE,
+            context.drawTexture(RenderLayer::getGuiTexturedOverlay,
+                    WIDGETS_TEXTURE,
                     (int) hotbar.x + (SegmentedMod.selectedHotbarSegment * SEGMENT_OFFSET),
                     (int) hotbar.y,
                     (float) SEGMENT_SELECTOR.x + (SegmentedMod.selectedHotbarSegment * (SEGMENT_SELECTOR.width + 1)),
@@ -83,13 +90,14 @@ public class SegmentedHotbarRenderer {
         }
 
         // render offhand on the proper side
-        if (!player.getOffHandStack().isEmpty()) {
+        if (inventory.offHand.isEmpty()) {
             int offHandX = (int) hotbar.x + HOTBAR_BOUNDING_BOX.width - (HOTBAR_GAP - 2);
             if (player.getMainArm().getOpposite() == Arm.LEFT) {
                 offHandX = (int) hotbar.x - OFFHAND_SLOT.width + (HOTBAR_GAP - 2);
             }
 
-            context.drawTexture(WIDGETS_TEXTURE,
+            context.drawTexture(RenderLayer::getGuiTexturedOverlay,
+                    WIDGETS_TEXTURE,
                     offHandX,
                     (int) hotbar.y,
                     (float) OFFHAND_SLOT.x,
@@ -102,7 +110,7 @@ public class SegmentedHotbarRenderer {
             // render offhand item
             ItemStack itemStack = player.getOffHandStack();
             context.drawItem(itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
-            context.drawItemInSlot(client.textRenderer, itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
+            context.drawStackOverlay(client.textRenderer, itemStack, offHandX + ITEM_INSET, (int) hotbar.y + ITEM_INSET);
         }
 
         // render items
@@ -111,7 +119,7 @@ public class SegmentedHotbarRenderer {
             int y = (int) hotbar.y + ITEM_INSET;
             ItemStack itemStack = inventory.getStack(currSlot);
             context.drawItem(itemStack, x, y);
-            context.drawItemInSlot(client.textRenderer, itemStack, x, y);
+            context.drawStackOverlay(client.textRenderer, itemStack, x, y);
         }
 
 
@@ -127,8 +135,30 @@ public class SegmentedHotbarRenderer {
                 }
 
                 int dy = (int)(cooldownProgress * 19.0F);
-                context.drawTexture(VANILLA_ICONS_TEXTURE, x, y, 0, 94, 18, 18);
-                context.drawTexture(VANILLA_ICONS_TEXTURE, x, y + 18 - dy, 18, 112 - dy, 18, dy);
+                context.drawTexture(
+                        RenderLayer::getGuiTexturedOverlay,
+                        HOTBAR_ATTACK_INDICATOR_BACKGROUND_TEXTURE,
+                        x,
+                        y,
+                        0,
+                        0,
+                        18,
+                        18,
+                        18,
+                        18
+                );
+                context.drawTexture(
+                        RenderLayer::getGuiTexturedOverlay,
+                        HOTBAR_ATTACK_INDICATOR_PROGRESS_TEXTURE,
+                        x,
+                        y + 18 - dy,
+                        0,
+                        -dy,
+                        18,
+                        dy,
+                        18,
+                        18
+                );
             }
         }
         RenderSystem.disableBlend();

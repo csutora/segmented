@@ -25,4 +25,12 @@ public abstract class MouseMixin {
         if (config.enabled && config.usereset) { SegmentedMod.selectedHotbarSegment = -1; }
 
     }
+
+    @Inject(method = "onMouseScroll", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;setSelectedSlot(I)V"))
+    private void segmentedOnMouseScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
+        SegmentedConfig config = AutoConfig.getConfigHolder(SegmentedConfig.class).getConfig();
+        if (config.enabled && config.scrollreset) {
+            SegmentedMod.selectedHotbarSegment = -1;
+        }
+    }
 }
